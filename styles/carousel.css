@@ -1,0 +1,31 @@
+.carousel-container {
+    display: flex;
+    align-items: center;
+}
+.carousel-inner {
+    display: block;
+    width: 70%; /* Adjust as needed */
+    margin-left: 100px;
+}
+.carousel-captions {
+    width: 30%; /* Adjust as needed */
+    padding-left: 20px; /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.caption {
+    display: none;
+}
+.caption.active {
+    display: flex;
+}
+
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.child {
+    margin: auto;
+}
