@@ -31,8 +31,6 @@
    Our team comprises passionate animal lovers with diverse backgrounds in animal care, veterinary medicine, and adoption counseling. Our thorough adoption process ensures that each pet finds the perfect match. From application to post-adoption support, we're here every step of the way.We rescue animals from shelters, provide essential veterinary care, and 
    rehabilitate them to prepare for adoption.Discover our creative team that gives birth to unique and impactful communication campaigns. Influential marketing experts and animal enthusiasts, we design each project for your needs and objectives as well as those of your users and animals.
    Make people happy, gain customers, engage your communities! Three promises that My Pet Agency is proud to uphold, because we know the true conversion power of animals.
-
-
 </p>
    <a href = "register.php" class ="btn btn-success"> Register </a>
   </div>

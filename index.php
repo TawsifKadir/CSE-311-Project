@@ -18,7 +18,7 @@
     ?>
 
     <div>
-        <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid" background-color = "#e3d0cf">
             <div class = "carousel-container">
                 <div class="container">
                     <h1  class ="text-center" class="display-1"> WELCOME </h1>
@@ -59,18 +59,18 @@
                     </div>
 
                  
-                    <div class="carousel-captions">
-                        <div class="caption active" id="caption1">
+                    <div class="vertical-container">
+                        <div class="caption active item" id="caption1">
                             <h3>ADOPT A PET AND GAIN A FRIEND FOR LIFE!</h3>
                             <p>We are here to help you to find a adorable pet</p>
                         </div>
 
-                        <div class="caption d-none" id="caption2">
+                        <div class="caption d-none item" id="caption2">
                             <h3>FIND A FOREVER FRIEND</h3>
                             <p>We are here to ensure you the most suitable pet</p>
                         </div>
 
-                        <div class="caption d-none" id="caption3">
+                        <div class="caption d-none item" id="caption3">
                             <h3>WE CAN GIVE YOUR PET A NEW HOME</h3>
                             <p>You can have confidence that you have chosen the right animal shelter</p>
                         </div>

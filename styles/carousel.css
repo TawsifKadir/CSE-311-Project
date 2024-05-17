@@ -1,19 +1,14 @@
 .carousel-container {
     display: flex;
     align-items: center;
+    background-color: #e3d0cf;
 }
 .carousel-inner {
     display: block;
     width: 70%; /* Adjust as needed */
     margin-left: 100px;
 }
-.carousel-captions {
-    width: 30%; /* Adjust as needed */
-    padding-left: 20px; /* Adjust as needed */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+
 .caption {
     display: none;
 }
@@ -28,4 +23,18 @@
 }
 .child {
     margin: auto;
+}
+
+.vertical-container {
+    display: grid;
+    grid-template-rows: auto; /* Creates rows for each child */
+    gap: 10px; /* Optional: add space between items */
+    border: 1px solid #ccc; /* Optional: for visualization */
+    padding: 10px; /* Optional: add padding around the container */
+}
+
+.item {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
 }

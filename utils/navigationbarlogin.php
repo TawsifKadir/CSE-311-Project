@@ -33,11 +33,13 @@
                     <i class="fas fa-bars"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="index.php">Home</a>
-                    <a class="dropdown-item" href="about.php">About us</a>
-                    <a class="dropdown-item" href="pet.php">Our Pets</a>
+                    <a class="dropdown-item" href="dashboard.php">Home</a>
+                    <a class="dropdown-item" href="profile.php">My Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="register.php">Register</a>
+                    <a class="dropdown-item" href="#">Adopt a pet</a>
+                    <a class="dropdown-item" href="#">Your Pets</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="login.php">Log out</a>
                 </div>
             </li>
         </ul>
@@ -46,7 +48,9 @@
         
         <ul class="navbar-nav ml-auto login_move">
             <li class="nav-item">
-               <a class="nav-link" href="login.php">Login</a>
+               <a class="nav-link" href="profile.php">
+                    <img src="" alt="Profile Picture">
+                </a>
             </li>
         </ul>
      
