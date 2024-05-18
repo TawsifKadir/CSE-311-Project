@@ -2,9 +2,12 @@
 
 <style>
     .navbar {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            font-size: 1.25rem; /* Optional: Increase font size */
+             /* padding-top: 1rem;
+        padding-bottom: 1rem; */
+        font-size: 1.5rem;
+        padding-right: 0.5rem;
+        height: 100px;
+        /* Optional: Increase font size */
     } 
 
     .login_move{
@@ -12,7 +15,7 @@
     }
 
     .title{
-        padding-left: 2%;
+        padding-left: 3%;
         color : #f2ebeb;
     }
 

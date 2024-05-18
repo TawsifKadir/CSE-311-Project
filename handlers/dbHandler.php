@@ -5,7 +5,7 @@
     $user = 'root';
     $pass = '';
     $userTable = 'Users';
-    $petTable = 'Pets';
+    $petTable = 'Pets_Table';
     $newsTable = 'News';
 
     // DSN for connecting to MySQL server (without specifying a database)
@@ -72,7 +72,7 @@
         $pdo->exec("USE $db");
 
         // Check if the table exists
-        $stmt = $pdo->query("SHOW TABLES LIKE 'Users'");
+        $stmt = $pdo->query("SHOW TABLES LIKE $userTable");
         $tableExists = $stmt->rowCount() > 0;
 
         // If the table does not exist, create it
@@ -95,6 +95,38 @@
             echo "Table $userTable created successfully.";
         } else {
             echo "Table $userTable already exists.";
+        }
+    }
+
+    function isPetsTableExists(){
+        global $db,$petTable,$userTable;
+        $pdo = getPDOConnection();
+
+        $pdo->exec("USE $db");
+
+        // Check if the table exists
+        $stmt = $pdo->query("SHOW TABLES LIKE $petTable");
+        $tableExists = $stmt->rowCount() > 0;
+
+        // If the table does not exist, create it
+        if (!$tableExists) {
+            $sql = "
+            CREATE TABLE $petTable (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                description VARCHAR(1000),
+                image LONGBLOB,
+                owner_id INT NON NULL,
+                adopter_id INT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (owner_id) REFERENCES $userTable(id),
+                FOREIGN KEY (adopter_id) REFERENCES $userTable(id)
+            )";
+
+            $pdo->exec($sql);
+            echo "Table $petTable created successfully.";
+        } else {
+            echo "Table $petTable already exists.";
         }
     }
 
@@ -132,6 +164,38 @@
         
     }
 
+    function insertIntoPetsTable($name,$description,$image,$owner_id,$adopter_id){
+        global $db,$petTable;
+        isPetsTableExists();
+        try{
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+            $sql = "
+                INSERT INTO $petTable (name,description,image,owner_id,adopter_id) VALUES (
+                :name,:description,
+                :image,:owner_id,:adopter_id
+                )";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt -> bindParam(':name',$name);
+            $stmt -> bindParam(':description',$description);
+            $stmt -> bindParam(':image',$image, PDO::PARAM_LOB);
+            $stmt -> bindParam(':owner_id',$owner_id);
+            $stmt -> bindParam(':adopter_id',$adopter_id);
+
+            if($stmt -> execute()){
+                echo "Pet inserted successfully.";
+            }else{
+                echo 'Error in inserting user';
+            }
+            return true;
+        }catch(PDOException $e){
+            echo $e;
+            return false;
+        }
+    }
+
     function verifyUserLogin($credential,$password){
         global $db,$userTable;
         try{
@@ -153,7 +217,6 @@
             if($passDb === $password){
                 return $user;
             }else{
-                echo 'Invalid username or password';
                 return null;
             }
 

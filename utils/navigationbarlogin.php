@@ -1,9 +1,11 @@
 
 <style>
     .navbar {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        font-size: 1.25rem;
+        /* padding-top: 1rem;
+        padding-bottom: 1rem; */
+        font-size: 1.5rem;
+        padding-right: 0.5rem;
+        height: 100px;
         /* Optional: Increase font size */
     }
 
@@ -12,7 +14,7 @@
     }
 
     .title {
-        padding-left: 2%;
+        padding-left: 3%;
         color: #f2ebeb;
     }
 </style>
@@ -35,6 +37,7 @@
                     <a class="dropdown-item" href="dashboard.php">Home</a>
                     <a class="dropdown-item" href="profile.php">My Profile</a>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="petRegister.php">Post a pet</a>
                     <a class="dropdown-item" href="#">Adopt a pet</a>
                     <a class="dropdown-item" href="#">Your Pets</a>
                     <div class="dropdown-divider"></div>
