@@ -10,7 +10,7 @@
             require('includes/dependencies.php');
             require('handlers/dbHandler.php');
             if(isset($_SESSION['user_id'])){
-                $items = getAllPetsWithoutUser($_SESSION['user_id']);
+                $items = getAllPetsOfUser($_SESSION['user_id']);
             }else{
                 header('location: login.php');
                 exit();
@@ -27,12 +27,12 @@
         ?>
         
         <div class="container mt-5 mb-5">
-            <h1 class="mb-5">Available Pets</h1>
+            <h1 class="mb-5">Your Pets</h1>
             <?php if (!empty($items)) : ?>
                 <div class="row">
                     <?php foreach ($items as $item) : ?>
                         <div class="col-md-4">
-                            <a href="item_details_adopter.php?id=<?php echo $item['id']; ?>" class="item-link">
+                            <a href="item_details.php?id=<?php echo $item['id']; ?>" class="item-link">
                                 <div class="card item-card">
                                     <?php if ($item['image']) : ?>
                                         <img src="data:image/jpeg;base64,<?php echo base64_encode($item['image']); ?>" alt="Item Image" class="card-img-top item-image">

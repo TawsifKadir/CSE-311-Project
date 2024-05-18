@@ -38,8 +38,8 @@
                     <a class="dropdown-item" href="profile.php">My Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="petRegister.php">Post a pet</a>
-                    <a class="dropdown-item" href="#">Adopt a pet</a>
-                    <a class="dropdown-item" href="#">Your Pets</a>
+                    <a class="dropdown-item" href="pet_list.php">Adopt a pet</a>
+                    <a class="dropdown-item" href="pet_list_user.php">Your Pets</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" id="logout">Log out</a>
                 </div>

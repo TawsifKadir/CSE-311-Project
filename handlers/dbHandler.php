@@ -72,7 +72,12 @@
         $pdo->exec("USE $db");
 
         // Check if the table exists
-        $stmt = $pdo->query("SHOW TABLES LIKE $userTable");
+        $sql = "SHOW TABLES LIKE :table_name";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':table_name', $userTable);
+
+        // Execute the query
+        $stmt->execute();
         $tableExists = $stmt->rowCount() > 0;
 
         // If the table does not exist, create it
@@ -105,7 +110,12 @@
         $pdo->exec("USE $db");
 
         // Check if the table exists
-        $stmt = $pdo->query("SHOW TABLES LIKE $petTable");
+        $sql = "SHOW TABLES LIKE :table_name";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':table_name', $petTable);
+
+        // Execute the query
+        $stmt->execute();
         $tableExists = $stmt->rowCount() > 0;
 
         // If the table does not exist, create it
@@ -116,7 +126,7 @@
                 name VARCHAR(100) NOT NULL,
                 description VARCHAR(1000),
                 image LONGBLOB,
-                owner_id INT NON NULL,
+                owner_id INT NOT NULL,
                 adopter_id INT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (owner_id) REFERENCES $userTable(id),
@@ -196,6 +206,58 @@
         }
     }
 
+    function getAllPetsWithoutUser($userID){
+        try{
+            global $db,$petTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "SELECT * 
+            FROM $petTable WHERE owner_id != $userID";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            $items = $stmt->fetchAll();
+
+            if($items != null){
+                return $items;
+            }else{
+                return null;
+            }
+            
+        }catch(PDOException $e){
+            echo $e;
+            return null;
+        }
+    }
+
+    function getAllPetsOfUser($userID){
+        try{
+            global $db,$petTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "SELECT * 
+            FROM $petTable WHERE owner_id = $userID";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            $items = $stmt->fetchAll();
+
+            if($items != null){
+                return $items;
+            }else{
+                return null;
+            }
+            
+        }catch(PDOException $e){
+            echo $e;
+            return null;
+        }
+    }
+
     function verifyUserLogin($credential,$password){
         global $db,$userTable;
         try{
@@ -222,6 +284,32 @@
 
         }catch(PDOException $e){
             echo $e;
+            return null;
+        }
+    }
+
+    function getPetByID($pet_ID){
+        try {
+            global $petTable,$db;
+            // Get the PDO instance
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+    
+            // Prepare the SQL query to get the item details by ID
+            $sql = "SELECT * FROM $petTable WHERE id = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', $pet_ID, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            // Fetch the item details
+            $item = $stmt->fetch();
+    
+            if (!$item) {
+                return null;
+            }else{
+                return $item;
+            }
+        } catch (PDOException $e) {
             return null;
         }
     }

@@ -1,0 +1,102 @@
+/* Make the body take the full height and use Flexbox to center the box */
+
+.box-holder{
+    margin: 0;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.back-button {
+    margin-right: 10px;
+    color: #000;
+    text-decoration: none;
+}
+
+/* Centered box styling */
+.centered-box {
+    width: 60%;
+    height: 500px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styling for the image and name */
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    text-decoration: none;
+    margin-left: 2%;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 2%;
+}
+
+/* Content area styling */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding-right: 10px; /* Add padding to avoid scrollbar overlap */
+}
+
+/* Content box styling */
+.content-box {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Footer styling for the input box and button */
+.footer {
+    display: flex;
+    align-items: center;
+}
+
+.input-box {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.send-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.send-button i {
+    font-size: 16px;
+}

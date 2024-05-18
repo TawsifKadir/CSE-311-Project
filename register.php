@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <?php
   require('includes/dependencies.php');
+  session_start();
   ?>
   <link rel="stylesheet" href="styles/placeholder.css">
 

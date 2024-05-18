@@ -5,27 +5,23 @@
   <title> pet agency </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <?php
-  require('includes/dependencies.php');
+  <?php 
+    session_start();
+    require('includes/dependencies.php');
   ?>
   <link rel="stylesheet" href="styles/placeholder.css">
-
-
 
 </head>
 
 <body>
 
   <?php
-  include('utils/navigationbar.php')
+  include('utils/navigationbarlogin.php')
   ?>
 
-  <div>
-    <input class="form-control" type="text" placeholder=" Provide your information to register ...." readonly>
-  </div>
   <section class="my-5">
     <div class="py-5">
-      <h1 class=text-center> Registration Form</h1>
+      <h1 class=text-center> Post your pet</h1>
     </div>
     <div class="w-50 m-auto">
       <form action="petInsertHandler.php" method="POST" enctype="multipart/form-data">
