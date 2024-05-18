@@ -9,15 +9,17 @@
         require('includes/dependencies.php');
         require('handlers/dbHandler.php');
 
+        session_start();
+
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $recipient = getUserByID($id);
+            $sender_id = $_SESSION['user_id'];
         } else {
             echo 'Invalid request.';
             exit();
         }
 
-        session_start();
     ?>
 </head>
 <body>
@@ -26,7 +28,7 @@
         require('utils/navigationbarlogin.php');
     ?>
     <div class="box-holder">
-        <div class="centered-box">
+        <div class="centered-box" data-user-id="<?php echo htmlspecialchars($sender_id);?>" data-recipient-id="<?php echo htmlspecialchars($id); ?>">
             <div class="header">
                 <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
                 <a href="usercontact.php?id=<?php echo $recipient['id']; ?>" class="profile-link">
@@ -39,23 +41,16 @@
                 
                 <span class="name"><?php echo htmlspecialchars($recipient['username']); ?></span>
             </div>
-            <div class="content">
-                <!-- Add your scrollable content here -->
-                <div class="content-box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero a justo interdum malesuada. Quisque consectetur velit sed justo vehicula, ac posuere ligula dignissim.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero a justo interdum malesuada. Quisque consectetur velit sed justo vehicula, ac posuere ligula dignissim.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero a justo interdum malesuada. Quisque consectetur velit sed justo vehicula, ac posuere ligula dignissim.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero a justo interdum malesuada. Quisque consectetur velit sed justo vehicula, ac posuere ligula dignissim.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero a justo interdum malesuada. Quisque consectetur velit sed justo vehicula, ac posuere ligula dignissim.</p>
-                </div>
+            <div class="content" id="content">
+                <!-- Messages will be dynamically loaded here -->
             </div>
             <div class="footer">
-                <input type="text" placeholder="Type here..." class="input-box">
-                <button class="send-button"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" placeholder="Type here..." class="input-box" id="input-box">
+                <button class="send-button" id="send-button"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
 
     </div>
-
+    <script src="chatoboxScript.js"></script>
 </body>
 </html>

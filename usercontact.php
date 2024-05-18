@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <a href="item_details_adopter.php?id=<?php echo $id; ?>" class="btn btn-primary" style="margin-top: 20px; width:30%; ">Back</a>
+                    <a href="javascript:history.back()" class="btn btn-primary" style="margin-top: 20px; width:30%; ">Back</a>
                     <a href="chatbox.php?id=<?php echo $id; ?>" class="btn btn-success" style="margin-top: 20px; width:30%; ">Message</a>
                 </div>
             </div>

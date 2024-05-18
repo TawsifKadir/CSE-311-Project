@@ -49,6 +49,43 @@
     margin-left: 2%;
 }
 
+.message {
+    padding: 10px;
+    padding-inline: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    max-width: 70%;
+    position: relative;
+}
+
+.message.user {
+    background-color: #d1e7dd;
+
+    align-self: flex-end;
+}
+
+.message.recipient {
+    background-color: #f8d7da;
+
+    align-self: flex-start;
+}
+
+.message .timestamp {
+    font-size: 0.8em;
+    color: #888;
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
+}
+
+/* Timestamp divider styling */
+.timestamp-divider {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin: 20px 0;
+}
+
 .name {
     font-size: 18px;
     font-weight: bold;
@@ -61,13 +98,8 @@
     overflow-y: auto;
     margin-bottom: 10px;
     padding-right: 10px; /* Add padding to avoid scrollbar overlap */
-}
-
-/* Content box styling */
-.content-box {
-    background-color: #f7f7f7;
-    padding: 10px;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column-reverse; /* Start from bottom */
 }
 
 /* Footer styling for the input box and button */

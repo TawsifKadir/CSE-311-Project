@@ -7,6 +7,7 @@
     $userTable = 'Users';
     $petTable = 'Pets_Table';
     $newsTable = 'News';
+    $chatTable = 'Chats';
 
     // DSN for connecting to MySQL server (without specifying a database)
     $dsn = "mysql:host=$host;charset=utf8mb4";
@@ -140,6 +141,42 @@
         }
     }
 
+    function isChatTableExists(){
+        global $db,$chatTable,$userTable;
+        $pdo = getPDOConnection();
+
+        $pdo->exec("USE $db");
+
+        // Check if the table exists
+        $sql = "SHOW TABLES LIKE :table_name";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':table_name', $chatTable);
+
+        // Execute the query
+        $stmt->execute();
+        $tableExists = $stmt->rowCount() > 0;
+
+        // If the table does not exist, create it
+        if (!$tableExists) {
+            $sql = "
+                CREATE TABLE $chatTable (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    content VARCHAR(1000),
+                    sender_id INT NOT NULL,
+                    recipient_id INT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (sender_id) REFERENCES $userTable(id),
+                    FOREIGN KEY (recipient_id) REFERENCES $userTable(id)
+                )
+            ";
+
+            $pdo->exec($sql);
+            echo "Table $chatTable created successfully.";
+        } else {
+            echo "Table $chatTable already exists.";
+        }
+    }
+
     function insertIntoUsersTable($name,$username,$email,$password,$phone_no,$address,$description,$image){
         global $db,$userTable;
         isUserTableExists();
@@ -203,6 +240,63 @@
         }catch(PDOException $e){
             echo $e;
             return false;
+        }
+    }
+
+    function insertIntoChatsTable($content,$sender_id,$recipient_id){
+        global $db,$chatTable;
+        isChatTableExists();
+        try{
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+            $sql = "
+                INSERT INTO $chatTable (content,sender_id,recipient_id) VALUES (
+                :content,:sender_id,:recipient_id,
+                )";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt -> bindParam(':content',$content);
+            $stmt -> bindParam(':sender_id',$sender_id);
+            $stmt -> bindParam(':recipient_id',$recipient_id);
+
+            if($stmt -> execute()){
+                echo "Chat inserted successfully.";
+            }else{
+                echo 'Error in inserting user';
+            }
+            return true;
+        }catch(PDOException $e){
+            echo $e;
+            return false;
+        }
+    }
+
+    function getAllChats($sender_id,$recipient_id,$last_message_id){
+        try{
+            global $db,$chatTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "SELECT * 
+            FROM $chatTable WHERE sender_id = :sender_id AND recipient_id = :recipient_id AND id < :last_message_id
+            ORDER BY id DESC
+            LIMIT 15";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':sender_id', $sender_id);
+            $stmt->bindParam(':recipient_id', $recipient_id);
+            $stmt->bindParam(':last_message_id', $last_message_id);
+
+            $stmt->execute();
+
+            $messages = $stmt->fetchAll();
+
+            return json_encode($messages);
+            
+        }catch(PDOException $e){
+            return null;
         }
     }
 
