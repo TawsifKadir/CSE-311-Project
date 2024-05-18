@@ -11,10 +11,11 @@
     $phone = $_POST['mobile'];
     $address = $_POST['address'];
     $description = $_POST['description'];
+    $image = file_get_contents($_FILES['imageInput']['tmp_name']);
 
     if(validateForm()){
         createDatabase();
-        if(insertIntoUsersTable($name,$username,$email,$password,$phone,$address,$description)){
+        if(insertIntoUsersTable($name,$username,$email,$password,$phone,$address,$description,$image)){
             goToDashboard();
         }else{
             

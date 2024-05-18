@@ -28,14 +28,14 @@
       <h1 class=text-center> Registration Form</h1>
     </div>
     <div class="w-50 m-auto">
-      <form action="registrationHandler.php" method="POST">
+      <form action="registrationHandler.php" method="POST" enctype="multipart/form-data">
 
         <div class="row justify-content-center align-items-center min-vh-100">
           <div class="col-md-4 text-center">
             <div id="placeholder" class="rounded-circle">
               <img src="images/placeholder.jpg" alt="Click to upload" id="placeholderImage" class="rounded-circle">
             </div>
-            <input type="file" name="image" id="imageInput" accept="image/*">
+            <input type="file" name="imageInput" id="imageInput" accept="image/*" class="form-control-file" required>
           </div>
         </div>
 

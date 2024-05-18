@@ -1,7 +1,7 @@
 <?php
     // Database configuration
     $host = 'localhost';
-    $db = 'pet_store';
+    $db = 'pets';
     $user = 'root';
     $pass = '';
     $userTable = 'Users';
@@ -86,7 +86,9 @@
                 password VARCHAR(30) NOT NULL,
                 phone_no VARCHAR(12),
                 address VARCHAR(100),
-                description VARCHAR(1000)
+                description VARCHAR(1000),
+                profile_image LONGBLOB,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
 
             $pdo->exec($sql);
@@ -96,16 +98,16 @@
         }
     }
 
-    function insertIntoUsersTable($name,$username,$email,$password,$phone_no,$address,$description){
+    function insertIntoUsersTable($name,$username,$email,$password,$phone_no,$address,$description,$image){
         global $db,$userTable;
         isUserTableExists();
         try{
             $pdo = getPDOConnection();
             $pdo->exec("USE $db");
             $sql = "
-                INSERT INTO $userTable (name,username,email,password,phone_no,address,description) VALUES (
+                INSERT INTO $userTable (name,username,email,password,phone_no,address,description,profile_image) VALUES (
                 :name,:username,
-                :email,:password,:phone_no,:address,:description
+                :email,:password,:phone_no,:address,:description,:profile_image
             )";
             $stmt = $pdo->prepare($sql);
             $stmt -> bindParam(':name',$name);
@@ -115,6 +117,7 @@
             $stmt -> bindParam(':phone_no',$phone_no);
             $stmt -> bindParam(':address',$address);
             $stmt -> bindParam(':description',$description);
+            $stmt -> bindParam(':profile_image',$image, PDO::PARAM_LOB);
 
             if($stmt -> execute()){
                 echo "User inserted successfully.";
@@ -129,32 +132,66 @@
         
     }
 
-    function verifyUserLogin($username,$password){
+    function verifyUserLogin($credential,$password){
         global $db,$userTable;
         try{
             $pdo = getPDOConnection();
             $pdo->exec("USE $db");
             
             $sql = "
-            SELECT password FROM $userTable
-            WHERE username LIKE '$username'";
+            SELECT * FROM $userTable
+            WHERE username LIKE :username OR email LIKE :username";
 
             $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':username',$credential);
             $stmt->execute();
 
-            $passDb = $stmt->fetchColumn();
+            $user = $stmt->fetch();
 
-            if($password === $passDb){
-                return true;
+            $passDb = $user['password'];
+
+            if($passDb === $password){
+                return $user;
             }else{
                 echo 'Invalid username or password';
-                echo $username;
-                echo $passDb;
-                return false;
+                return null;
             }
 
         }catch(PDOException $e){
             echo $e;
+            return null;
+        }
+    }
+
+    function getUserByID($user_id){
+        try {
+            // Get the PDO instance
+            global $userTable;
+            $pdo = getPDOConnection();
+        
+            // Prepare the SQL query to get the logged-in user's information
+            $sql = "SELECT * FROM $userTable WHERE id = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', $user_id);
+            $stmt->execute();
+            
+            $user = $stmt->fetch();
+        
+            if (!$user) {
+                // If the user does not exist, log them out
+                session_unset();
+                session_destroy();
+                header('Location: login.php');
+                exit();
+                return null;
+            }else{
+                return $user;
+            }
+        } catch (PDOException $e) {
+            // Store the error message in the session and redirect to the login page
+            $_SESSION['error_message'] = "Database error: " . $e->getMessage();
+            header('Location: login.php');
+            exit();
         }
     }
 
