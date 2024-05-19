@@ -99,7 +99,7 @@
     margin-bottom: 10px;
     padding-right: 10px; /* Add padding to avoid scrollbar overlap */
     display: flex;
-    flex-direction: column-reverse; /* Start from bottom */
+    flex-direction: column-reverse; 
 }
 
 /* Footer styling for the input box and button */

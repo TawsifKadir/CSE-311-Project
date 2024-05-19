@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     lastMessageId = messages[messages.length - 1].id;
                     console.log(lastMessageId);
                     messages.reverse().forEach(message => {
+                        console.log(messages.message);
                         const messageTimestamp = new Date(message.created_at);
                         if (lastMessageTimestamp && (messageTimestamp - lastMessageTimestamp) > (60 * 60 * 1000)) {
                             insertTimestampDivider(message.created_at);
@@ -50,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         messageElement.classList.add('message');
                         messageElement.classList.add(message.sender_id == userId ? 'user' : 'recipient');
                         messageElement.textContent = message.content;
-                        console.log("Function Called");
                         console.log(message.content);
                         messageElement.innerHTML = `
                             <div>${message.content}</div>
@@ -62,6 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             contentBox.prepend(messageElement);
                         }
                     });
+                    if (initialLoad) {
+                        contentBox.scrollTop = contentBox.scrollHeight;
+                    }
                 }
             });
     }
