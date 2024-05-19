@@ -26,7 +26,7 @@
             require('utils/navigationbarlogin.php');
         ?>
         
-        <div class="container mt-5 mb-5">
+        <div class="container mt-5 mb-5" style="padding-top: 70px;">
             <h1 class="mb-5">Your Pets</h1>
             <?php if (!empty($items)) : ?>
                 <div class="row">

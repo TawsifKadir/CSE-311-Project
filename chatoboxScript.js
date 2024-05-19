@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 insertTimestampDivider(currentTime);
             }
             lastMessageTimestamp = currentTime;
+            contentBox.scrollTop = contentBox.scrollHeight;
 
             // Store the message in the database
             fetch('store_message.php', {

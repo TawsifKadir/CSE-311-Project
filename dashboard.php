@@ -22,7 +22,7 @@
         include('utils/navigationbarlogin.php');
     ?>
 
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px;">
         
         <h1 class="mb-5">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
 

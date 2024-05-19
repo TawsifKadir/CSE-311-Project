@@ -50,7 +50,7 @@
     <?php
     include('utils/navigationbarlogin.php');
     ?>
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px;">
         <div class="row">
             <div class="col-md-4">
                 <div class="card">

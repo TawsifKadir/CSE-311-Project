@@ -2,7 +2,7 @@
 
 .box-holder{
     margin: 0;
-    height: 80vh;
+    height: 110vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,7 +99,7 @@
     margin-bottom: 10px;
     padding-right: 10px; /* Add padding to avoid scrollbar overlap */
     display: flex;
-    flex-direction: column-reverse; 
+    flex-direction: column; 
 }
 
 /* Footer styling for the input box and button */

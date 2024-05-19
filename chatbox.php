@@ -24,10 +24,11 @@
 </head>
 <body>
 
-    <?php
-        require('utils/navigationbarlogin.php');
-    ?>
+    
     <div class="box-holder">
+        <?php
+            require('utils/navigationbarlogin.php');
+        ?>
         <div class="centered-box" data-user-id="<?php echo htmlspecialchars($sender_id);?>" data-recipient-id="<?php echo htmlspecialchars($id); ?>">
             <div class="header">
                 <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
