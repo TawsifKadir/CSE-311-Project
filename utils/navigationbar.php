@@ -36,8 +36,6 @@
     font-size: 10px;
 }
 
-    
-
     .navbar-nav .nav-link {
         font-size: 18px; /* Make the navbar items text smaller */
         padding-left: 20px; /* More padding to the left for each item */
@@ -62,9 +60,6 @@
         color: #cccccc; /* Light gray color on hover */
     }
 </style>
-
-    
-
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -8,6 +8,7 @@ if (isset($_GET['id'])) {
     $item = getPetByID($id);
     if($item != null){
         $user = getUserByID($item['owner_id']);
+        $pet_id = $item['id'];
     }
 } else {
     echo 'Invalid request.';
@@ -61,7 +62,7 @@ if (isset($_GET['id'])) {
                 </div>
                 <div style="text-align: center;">
                     <a href="pet_list.php" class="btn btn-primary" style="margin-top: 20px; width:30%; ">Back</a>
-                    <a href="#" class="btn btn-secondary" style="margin-top: 20px; width:30%; ">Ask to adopt</a>
+                    <a href="#" class="btn btn-secondary" id="requestAdoptionButton" data-pet-id="<?php echo $pet_id; ?>" style="margin-top: 20px; width:30%; ">Ask to adopt</a>
                     <a href="usercontact.php?id=<?php echo $user['id']; ?>" class="btn btn-success" style="margin-top: 20px; width:30%; ">Contact</a>
                 </div>
 
@@ -69,6 +70,28 @@ if (isset($_GET['id'])) {
 
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#requestAdoptionButton').click(function() {
+                var petId = $(this).data('pet-id');
+
+                $.ajax({
+                    url: 'request_adoption.php',
+                    type: 'POST',
+                    data: { pet_id: petId },
+                    success: function(response) {
+                        alert(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>

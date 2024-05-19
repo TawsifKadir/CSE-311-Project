@@ -8,6 +8,7 @@
     $petTable = 'Pets_Table';
     $newsTable = 'News';
     $chatTable = 'Chats';
+    $notifications = 'notifications';
 
     // DSN for connecting to MySQL server (without specifying a database)
     $dsn = "mysql:host=$host;charset=utf8mb4";
@@ -129,6 +130,7 @@
                 image LONGBLOB,
                 owner_id INT NOT NULL,
                 adopter_id INT,
+                up_for_adoption BOOLEAN DEFAULT FALSE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (owner_id) REFERENCES $userTable(id),
                 FOREIGN KEY (adopter_id) REFERENCES $userTable(id)
@@ -174,6 +176,66 @@
             echo "Table $chatTable created successfully.";
         } else {
             echo "Table $chatTable already exists.";
+        }
+    }
+
+    function isNotificationTableExists(){
+        global $db,$notifications,$userTable;
+        $pdo = getPDOConnection();
+
+        $pdo->exec("USE $db");
+
+        // Check if the table exists
+        $sql = "SHOW TABLES LIKE :table_name";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':table_name', $notifications);
+
+        // Execute the query
+        $stmt->execute();
+        $tableExists = $stmt->rowCount() > 0;
+
+        // If the table does not exist, create it
+        if (!$tableExists) {
+            $sql = "
+                CREATE TABLE $notifications (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT NOT NULL,
+                    message TEXT NOT NULL,
+                    read_status BOOLEAN DEFAULT FALSE,
+                    pet_id INT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES $userTable(id)
+                );
+            ";
+
+            $pdo->exec($sql);
+            echo "Table $notifications created successfully.";
+        } else {
+            echo "Table $notifications already exists.";
+        }
+    }
+
+    function getUserNameById($user_id){
+        try{
+            global $db,$userTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "SELECT name 
+            FROM $userTable WHERE id = :id ";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindParam(':id', $user_id);
+
+            $stmt->execute();
+
+            $users = $stmt->fetchColumn();
+
+            return $users;
+            
+        }catch(PDOException $e){
+            return null;
         }
     }
 
@@ -300,6 +362,46 @@
         }
     }
 
+    function putUpPetForAdoption($pet_id){
+        try{
+            global $db,$petTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "UPDATE $petTable 
+            SET up_for_adoption = TRUE WHERE id = $pet_id";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            return true;
+            
+        }catch(PDOException $e){
+            echo $e;
+            return false;
+        }
+    }
+
+    function cancelAdoption($pet_ID){
+        try{
+            global $db,$petTable;
+            $pdo = getPDOConnection();
+            $pdo->exec("USE $db");
+
+            $sql = "UPDATE $petTable 
+            SET up_for_adoption = FALSE WHERE id = $pet_ID";
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+
+            return true;
+            
+        }catch(PDOException $e){
+            echo $e;
+            return false;
+        }
+    }
+
     function getAllPetsWithoutUser($userID){
         try{
             global $db,$petTable;
@@ -307,7 +409,7 @@
             $pdo->exec("USE $db");
 
             $sql = "SELECT * 
-            FROM $petTable WHERE owner_id != $userID";
+            FROM $petTable WHERE owner_id != $userID AND up_for_adoption = TRUE";
             
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
