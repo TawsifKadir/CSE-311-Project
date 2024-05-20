@@ -1,0 +1,177 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(2%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(2%);
+    }
+}
+
+/* Fade animations */
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+/* Slide animations */
+.slide-in {
+    animation: slideIn 1s forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s forwards;
+}
+
+.slide-out {
+    animation: slideOut 1s forwards;
+}
+
+.slide-up {
+    animation: slideUp 1s forwards;
+}
+
+.slide-down {
+    animation: slideDown 1s forwards;
+}
+
+/* Animation on hover to demonstrate sliding back to starting position */
+.animate-slide-in:hover {
+    animation: slideIn 1s forwards;
+}
+
+.animate-slide-out:hover {
+    animation: slideOut 1s forwards;
+}
+
+.animate-slide-up:hover {
+    animation: slideUp 1s forwards;
+}
+
+.animate-slide-down:hover {
+    animation: slideDown 1s forwards;
+}
+
+@keyframes grow {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
+    }
+}
+
+.grow:hover {
+    animation: grow 0.2s forwards;
+}
+
+@keyframes growImage {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.05);
+    }
+}
+
+.grow-image:hover {
+    animation: growImage 0.2s forwards;
+}
+
+
+/* Shrink on Hover */
+@keyframes shrink {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0.8);
+    }
+}
+
+.shrink:hover {
+    animation: shrink 0.2s forwards;
+}
+
+@keyframes shrinkImage {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0.95);
+    }
+}
+
+.shrink-image:hover {
+    animation: shrinkImage 0.2s forwards;
+}
+
+/* Drop from Top */
+@keyframes dropFromTop {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.drop-from-top {
+    animation: dropFromTop 1s forwards;
+}

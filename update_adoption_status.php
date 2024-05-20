@@ -4,8 +4,9 @@ require('handlers/dbHandler.php');
 
 global $db,$petTable;
 
-if (!isset($_SESSION['user_id'])) {
-    die("Unauthorized access");
+if(!isset($_SESSION['user_id'])){
+    header('location:login.php');
+    exit();
 }
 
 $user_id = $_SESSION['user_id'];

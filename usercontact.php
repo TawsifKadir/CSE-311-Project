@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/animations.css">
     <?php
 
     require('handlers/dbHandler.php');
@@ -18,17 +20,23 @@
     }
     session_start();
 
+    if(!isset($_SESSION['user_id'])){
+        header('location:login.php');
+        exit();
+    }
+
     require('includes/dependencies.php');
     ?>
 </head>
 
 <body>
+    <div class="content-for-footer">
     <?php
     include('utils/navigationbarlogin.php');
     ?>
     <div class="container mt-5" style="padding-top: 70px;">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 slide-in">
                 <div class="card">
                     <?php if ($user['profile_image']) : ?>
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_image']); ?>" alt="Profile Image" class="card-img-top">
@@ -40,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 slide-in-right">
                 <div class="card">
                     <div class="card-header">
                         Profile Information
@@ -63,6 +71,10 @@
             </div>
         </div>
     </div>
+    </div>
+    <?php
+        require('utils/footer.php');
+    ?>
 </body>
 
 </html>

@@ -5,17 +5,21 @@
     <title> pet agency </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/animations.css">
     <?php
+    ob_start();
     session_start();
     require('includes/dependencies.php');
     require('handlers/dbHandler.php');
     ?>
 </head>
 
-<body>
+<body class="fade-in">
 
+    <div class="content-for-footer">
     <?php
-    include('utils/navigationbar.php')
+        include('utils/navigationbar.php')
     ?>
 
     <?php
@@ -75,11 +79,11 @@
             </form>
         </div>
     </section>
-    <div class="py-5">
-        <footer>
-            <p class="p-3 bg-dark text-white text-center"> fk@gamil.com</p>
-        </footer>
     </div>
+    <?php
+        require('utils/footer.php');
+        ob_end_flush();
+    ?>
 </body>
 
 </html>

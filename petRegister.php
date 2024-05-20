@@ -8,26 +8,32 @@
   <?php 
     session_start();
     require('includes/dependencies.php');
+    if(!isset($_SESSION['user_id'])){
+      header('location:login.php');
+      exit();
+    }
   ?>
   <link rel="stylesheet" href="styles/placeholder.css">
-
+  <link rel="stylesheet" href="styles/content.css">
+  <link rel="stylesheet" href="styles/animations.css">
 </head>
 
 <body>
 
+  <div class="content-for-footer">
   <?php
   include('utils/navigationbarlogin.php')
   ?>
 
   <section class="my-5">
     <div class="py-5">
-      <h1 class=text-center> Post your pet</h1>
+      <h1 class="text-center fade-in"> Post your pet</h1>
     </div>
     <div class="w-50 m-auto">
       <form action="petInsertHandler.php" method="POST" enctype="multipart/form-data">
 
         <div class="row justify-content-center align-items-center min-vh-100">
-          <div class="col-md-4 text-center">
+          <div class="col-md-4 text-center shrink-image">
             <div id="placeholder" class="rounded-circle">
               <img src="images/placeholder.jpg" alt="Click to upload" id="placeholderImage" class="rounded-circle">
             </div>
@@ -51,12 +57,7 @@
         </div>
       </form>
   </section>
-  <div class="py-5">
-    <footer>
-      <p class="p-3 bg-dark text-white text-center"> fk@gamil.com</p>
-    </footer>
-  </div>
-
+  
   <script>
     document.getElementById('placeholder').addEventListener('click', function() {
       document.getElementById('imageInput').click();
@@ -73,6 +74,10 @@
       }
     });
   </script>
+  </div>
+  <?php
+        require('utils/footer.php');
+    ?>
 
 </body>
 

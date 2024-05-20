@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centered Box with Image, Name, and Input</title>
     <link rel="stylesheet" href="styles/chatbox.css">
+    <link rel="stylesheet" href="styles/animations.css">
     <?php
         require('includes/dependencies.php');
         require('handlers/dbHandler.php');
 
         session_start();
+
+        if(!isset($_SESSION['user_id'])){
+            header('location:login.php');
+            exit();
+        }
 
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
@@ -29,14 +35,14 @@
         <?php
             require('utils/navigationbarlogin.php');
         ?>
-        <div class="centered-box" data-user-id="<?php echo htmlspecialchars($sender_id);?>" data-recipient-id="<?php echo htmlspecialchars($id); ?>">
+        <div class="centered-box drop-from-top" data-user-id="<?php echo htmlspecialchars($sender_id);?>" data-recipient-id="<?php echo htmlspecialchars($id); ?>">
             <div class="header">
-                <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
+                <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left grow"></i></a>
                 <a href="usercontact.php?id=<?php echo $recipient['id']; ?>" class="profile-link">
                     <?php if ($recipient['profile_image']) : ?>
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($recipient['profile_image']); ?>" alt="Profile Image" class="profile-image">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($recipient['profile_image']); ?>" alt="Profile Image" class="profile-image grow">
                     <?php else : ?>
-                        <img src="images/placeholder.jpg" alt="Profile Image" class="profile-image">
+                        <img src="images/placeholder.jpg" alt="Profile Image" class="profile-image grow">
                     <?php endif; ?>
                 </a>
                 
@@ -47,11 +53,14 @@
             </div>
             <div class="footer">
                 <input type="text" placeholder="Type here..." class="input-box" id="input-box">
-                <button class="send-button" id="send-button"><i class="fas fa-paper-plane"></i></button>
+                <button class="send-button grow" id="send-button"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
 
     </div>
     <script src="chatoboxScript.js"></script>
+    <?php
+        require('utils/footer.php');
+    ?>
 </body>
 </html>

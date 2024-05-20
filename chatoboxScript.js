@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         messageElement.classList.add('message');
                         messageElement.classList.add(message.sender_id == userId ? 'user' : 'recipient');
                         messageElement.textContent = message.content;
-                        console.log(message.content);
                         messageElement.innerHTML = `
                             <div>${message.content}</div>
                             <div class="timestamp">${formatTimestamp(message.created_at)}</div>
@@ -78,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (text !== '') {
             const currentTime = new Date();
             const timestamp = formatTimestamp(currentTime);
+            console.log(currentTime);
+            console.log(timestamp);
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', 'user');
             messageElement.innerHTML = `

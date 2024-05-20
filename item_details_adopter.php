@@ -15,6 +15,10 @@ if (isset($_GET['id'])) {
     exit();
 }
     session_start();
+    if(!isset($_SESSION['user_id'])){
+        header('location:login.php');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -22,15 +26,18 @@ if (isset($_GET['id'])) {
 
 <head>
     <title>Item Details</title>
+    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/animations.css">
 </head>
 
 <body>
+    <div class="content-for-footer">
     <?php
     require('utils/navigationbarlogin.php');
     ?>
     <div class="container mt-5" style="padding-top: 70px;">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 slide-in">
                 <div class="card">
                     <?php if ($item['image']) : ?>
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($item['image']); ?>" alt="Item Image" class="card-img-top">
@@ -42,7 +49,7 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 slide-in-right">
                 <div class="card">
                     <div class="card-header">
                         About Pet
@@ -62,7 +69,11 @@ if (isset($_GET['id'])) {
                 </div>
                 <div style="text-align: center;">
                     <a href="pet_list.php" class="btn btn-primary" style="margin-top: 20px; width:30%; ">Back</a>
-                    <a href="#" class="btn btn-secondary" id="requestAdoptionButton" data-pet-id="<?php echo $pet_id; ?>" style="margin-top: 20px; width:30%; ">Ask to adopt</a>
+                    <?php if ($item['adopter_id'] === $_SESSION['user_id']): ?>
+                        <button id="cancelAdoptionButton" class="btn btn-danger" data-pet-id="<?php echo $pet_id; ?>" style="margin-top: 20px; width:30%;">Cancel Adoption</button>
+                    <?php else: ?>
+                        <a href="#" class="btn btn-secondary" id="requestAdoptionButton" data-pet-id="<?php echo $pet_id; ?>" style="margin-top: 20px; width:30%; ">Ask to adopt</a>
+                    <?php endif; ?>
                     <a href="usercontact.php?id=<?php echo $user['id']; ?>" class="btn btn-success" style="margin-top: 20px; width:30%; ">Contact</a>
                 </div>
 
@@ -71,7 +82,6 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#requestAdoptionButton').click(function() {
@@ -80,17 +90,46 @@ if (isset($_GET['id'])) {
                 $.ajax({
                     url: 'request_adoption.php',
                     type: 'POST',
-                    data: { pet_id: petId },
+                    data: { pet_id: petId, action: 'request_adoption' },
                     success: function(response) {
-                        alert(response);
+                        if (response == 'success') {
+                            alert("Request sent. The owner has been notified");
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);
                     }
                 });
             });
+
+            $('#cancelAdoptionButton').click(function() {
+                var petId = $(this).data('pet-id');
+                $.ajax({
+                    url: 'request_adoption.php',
+                    type: 'POST',
+                    data: { pet_id: petId, action: 'cancel_adoption' },
+                    success: function(response) {
+                        if (response == 'success') {
+                            alert("Request cancelled");
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+            });
         });
+
+        
     </script>
+    </div>
+
+    <?php
+        require('utils/footer.php');
+    ?>
 
 </body>
 

@@ -143,11 +143,9 @@
         </div>
     </section>
 
-    <footer>
-        <div class="py-5">
-            <p class="p-3 bg-dark text-white text-center">fk@gmail.com</p>
-        </div>
-    </footer>
+    <?php
+        require('utils/footer.php');
+    ?>
 
 
     <script>

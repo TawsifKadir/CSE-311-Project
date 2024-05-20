@@ -35,7 +35,9 @@
     padding: 2px 5px;
     font-size: 10px;
 }
-
+    .navbar-brand img {
+            max-height: 40px; /* Adjust height as needed */
+        }
     .navbar-nav .nav-link {
         font-size: 18px; /* Make the navbar items text smaller */
         padding-left: 20px; /* More padding to the left for each item */
@@ -59,29 +61,41 @@
     .navbar-collapse.navbar-dark-theme .nav-link:hover {
         color: #cccccc; /* Light gray color on hover */
     }
-</style>
 
+    @keyframes slideDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(10%);
+        }
+    }
+
+    .animate-slide-down:hover {
+    animation: slideDown 0.5s forwards;
+}
+</style>
+    
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                
+                <li class="nav-item grow">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item grow">
                     <a class="nav-link" href="about.php">About us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pet.php">Our pets</a>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item grow">
                     <a class="nav-link" href="register.php">Register</a>
                 </li>
             </ul>
 
-            <div class="navbar-icons ml-auto">
+            <div class="navbar-icons ml-auto animate-slide-down">
                 <a href="login.php" class="icon-link">
                     <i class="fas fa-sign-in-alt"></i>
                 </a>

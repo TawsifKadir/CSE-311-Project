@@ -56,6 +56,10 @@
             // If the database does not exist, create it
             if (!$databaseExists) {
                 $pdo->exec("CREATE DATABASE $db");
+                isUserTableExists();
+                isChatTableExists();
+                isPetsTableExists();
+                isNotificationTableExists();
                 echo "Database '$db' created successfully.<br>";
             } else {
                 echo "Database '$db' already exists.<br>";
@@ -200,6 +204,7 @@
                 CREATE TABLE $notifications (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     user_id INT NOT NULL,
+                    sender_id INT NOT NULL,
                     message TEXT NOT NULL,
                     read_status BOOLEAN DEFAULT FALSE,
                     pet_id INT NOT NULL,

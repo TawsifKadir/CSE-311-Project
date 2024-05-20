@@ -10,13 +10,13 @@
   session_start();
   ?>
   <link rel="stylesheet" href="styles/placeholder.css">
-
-
-
+  <link rel="stylesheet" href="styles/content.css">
+  <link rel="stylesheet" href="styles/animations.css">
 </head>
 
 <body>
 
+  <div class="content-for-footer">
   <?php
   include('utils/navigationbar.php')
   ?>
@@ -25,14 +25,14 @@
     <input class="form-control" type="text" placeholder=" Provide your information to register ...." readonly>
   </div>
   <section class="my-5">
-    <div class="py-5">
+    <div class="py-5 fade-in">
       <h1 class=text-center> Registration Form</h1>
     </div>
     <div class="w-50 m-auto">
       <form action="registrationHandler.php" method="POST" enctype="multipart/form-data">
 
         <div class="row justify-content-center align-items-center min-vh-100">
-          <div class="col-md-4 text-center">
+          <div class="col-md-4 text-center shrink-image">
             <div id="placeholder" class="rounded-circle">
               <img src="images/placeholder.jpg" alt="Click to upload" id="placeholderImage" class="rounded-circle">
             </div>
@@ -88,12 +88,7 @@
         </div>
       </form>
   </section>
-  <div class="py-5">
-    <footer>
-      <p class="p-3 bg-dark text-white text-center"> fk@gamil.com</p>
-    </footer>
-  </div>
-
+  
   <script>
     document.getElementById('placeholder').addEventListener('click', function() {
       document.getElementById('imageInput').click();
@@ -110,6 +105,10 @@
       }
     });
   </script>
+  </div>
+  <?php
+        require('utils/footer.php');
+    ?>
 
 </body>
 

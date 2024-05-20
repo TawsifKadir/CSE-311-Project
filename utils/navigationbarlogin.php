@@ -1,13 +1,37 @@
 
 <style>
 
-
     .custom-dropdown-menu {
         background-color: #343a40; /* Dark background color */
         color: #ffffff; /* White text color */
         width: 100px;
     }
+    @keyframes grow {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
+    }
+    }
 
+    .grow:hover {
+        animation: grow 0.3s forwards;
+    }
+
+    /* Shrink on Hover */
+    @keyframes shrink {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(0.8);
+        }
+    }
+
+    .shrink:hover {
+        animation: shrink 0.3s forwards;
+    }
 
     .wide-dropdown {
         width: 230px; /* Set the desired width */
@@ -65,6 +89,19 @@
         font-size: 10px;
     }
 
+    .dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-track {
+        background: #343a40;
+    }
+
+    .dropdown-menu::-webkit-scrollbar-thumb {
+        background-color: #6c757d;
+        border-radius: 10px;
+        border: 2px solid #343a40;
+    }
     .navbar-icons {
     display: flex;
     align-items: center;
@@ -98,33 +135,47 @@
     .navbar-collapse.navbar-dark-theme .nav-link:hover {
         color: #cccccc; /* Light gray color on hover */
     }
+
+    .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #6c757d #343a40;
+        }
+        .profile-image-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
 </style>
 
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    
+        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Home</a>
+                    <a class="nav-link grow" href="dashboard.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profile.php">My Profile</a>
+                    <a class="nav-link grow" href="profile.php">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="petRegister.php">Post a pet</a>
+                    <a class="nav-link grow" href="petRegister.php">Post a pet</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pet_list.php">Adopt a pet</a>
+                    <a class="nav-link grow" href="pet_list.php">Adopt a pet</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pet_list_user.php">Your Pets</a>
+                    <a class="nav-link grow" href="pet_list_user.php">Your Pets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="logout">Logout</a>
+                    <a class="nav-link grow" href="#" id="logout">Logout</a>
                 </li>
             </ul>
 
@@ -133,27 +184,27 @@
             <div class="navbar-icons ml-auto" style="margin-right: 80px;">
                 <div class="icon-group">
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle icon-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle icon-link grow" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-dark custom-dropdown-menu wide-dropdown" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-dark custom-dropdown-menu wide-dropdown" aria-labelledby="notificationsDropdown">
                             <div id="notifications">
                                 <!-- Notifications will be dynamically loaded here -->
                             </div>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle icon-link" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle icon-link grow" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-dark custom-dropdown-menu wide-dropdown" aria-labelledby="messageDropdown">
-                            <a class="dropdown-item" href="#">Message 1</a>
-                            <a class="dropdown-item" href="#">Message 2</a>
-                            <a class="dropdown-item" href="#">Message 3</a>
+                            <div id="chat-users">
+                                <!-- Messages will be generated here -->
+                            </div>
                         </div>
                     </div>
                 </div>
-                <a href="profile.php">
+                <a href="profile.php" class="shrink-image">
                     <?php if (isset($_SESSION['profile_image'])) : ?>
                         <img src="data:image/jpeg;base64,<?php echo $_SESSION['profile_image']; ?>" alt="Profile Image" class="rounded-circle" style="width: 60px; height: 60px;">
                     <?php else : ?>
@@ -166,7 +217,9 @@
                 window.location.href = 'logout.php';
             });
         </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" defer></script>
         <script src="notifications.js" defer></script>
+        <script src=chat.js defer></script>
 
     </nav>
 

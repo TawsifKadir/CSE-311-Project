@@ -3,8 +3,9 @@ session_start();
 require('handlers/dbHandler.php');
 global $petTable,$userTable,$notifications;
 
-if (!isset($_SESSION['user_id'])) {
-    die("Unauthorized access");
+if(!isset($_SESSION['user_id'])){
+    header('location:login.php');
+    exit();
 }
 
 $pet_id = $_GET['pet_id'];
@@ -21,7 +22,7 @@ $pet_query->execute([$pet_id]);
 $pet = $pet_query->fetch(PDO::FETCH_ASSOC);
 
 if (!$pet) {
-    die("Pet not found.");
+    echo 'Pet not found';
 }
 
 $owner_id = $pet['owner_id'];
@@ -36,8 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Mark notification as read
         $mark_as_read_query = $pdo->prepare("UPDATE $notifications SET read_status = TRUE WHERE id = ?");
         $mark_as_read_query->execute([$notification_id]);
+        $delete_notification_query = $pdo->prepare("DELETE FROM $notifications WHERE pet_id = ?");
+        $delete_notification_query->execute([$pet_id]);
 
-        echo "Adoption confirmed.";
+        header('location:pet_list_user.php');
     } elseif (isset($_POST['decline'])) {
         // Decline adoption
         $decline_adoption_query = $pdo->prepare("UPDATE $petTable SET adopter_id = NULL WHERE id = ?");
@@ -58,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <title>Confirm Adoption</title>
+    <link rel="stylesheet" href="styles/animations.css">
 </head>
 
 <!DOCTYPE html>
@@ -69,10 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
         require('includes/dependencies.php');
     ?>
+    <link rel="stylesheet" type="text/css" href="styles/content.css">
     <style>
-        .container {
-            padding-top: 50px;
-        }
         .back-button {
             margin-bottom: 20px;
             width: 150px;
@@ -101,15 +103,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+    <div class="content-for-footer" style="padding-bottom: 20px;">
     <?php
     include('utils/navigationbarlogin.php');
     ?>
-    <div class="container mt-5" style="padding-top: 70px;">
+    <div class="container mt-5 slide-in" style="padding-top: 70px;">
     <a href="javascript:history.back()" class="btn btn-secondary back-button">
             <i class="fas fa-arrow-left"></i> Back
         </a>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 slide-in">
                 <div class="card">
                     <?php if ($pet['image']) : ?>
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($pet['image']); ?>" alt="Profile Image" class="card-img-top">
@@ -121,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 slide-in-right">
                 <div class="card">
                     <div class="card-header">
                         Pet Information
@@ -148,6 +151,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+    </div>
+    
+        <?php
+            require('utils/footer.php');
+        ?>
+    
 </body>
 </html>
     <?php
